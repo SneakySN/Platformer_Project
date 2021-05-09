@@ -24,7 +24,6 @@ TOP_VIEWPORT_MARGIN = 100
 char_scaling = 0.25
 
 
-
 class MyGame(arcade.Window):
     # Main application class.
     def __init__(self):
@@ -36,7 +35,7 @@ class MyGame(arcade.Window):
         self.coin_list = None
         self.wall_list = None
         self.player_list = None
-        self.player_sprite = arcade.Sprite("pic/char.png", char_scaling)
+        self.player_sprite = arcade.Sprite("pic/default/char.png", char_scaling)
 
         # Our physics engine
         self.physics_engine = None
@@ -52,6 +51,17 @@ class MyGame(arcade.Window):
         self.view_bottom = 0
         self.view_left = 0
 
+        # variables for map reading
+        self.map_title = None
+        self.map_author = None
+        self.char_x = None
+        self.char_y = None
+
+    def map_read(self, map_file):
+        m_f = open(map_file, "r")
+        while True:
+            temp_l = m_f.readlines()
+
     def wall_line(self, start, end, height, img):
         for x in range(start, end, 32):
             wall = arcade.Sprite(img, char_scaling)
@@ -65,16 +75,12 @@ class MyGame(arcade.Window):
         self.wall_list = arcade.SpriteList(use_spatial_hash=True)
         self.coin_list = arcade.SpriteList(use_spatial_hash=True)
 
-        # player_sprite attributes
-        self.player_sprite.center_x = 32
-        self.player_sprite.center_y = 64
-        self.player_list.append(self.player_sprite)
+        self.map_read("map/map.pm")
 
-        # the ground
-        self.wall_line(16, 2560, 32, "pic/def_floor.png")
-        self.wall_line(128, 384, 128, "pic/def_floor.png")
-        self.wall_line(128, 384, 512, "pic/def_floor.png")
-        self.wall_line(512, 768, 384, "pic/def_floor.png")
+        # player_sprite attributes
+        self.player_sprite.center_x = self.char_x
+        self.player_sprite.center_y = self.char_y
+        self.player_list.append(self.player_sprite)
 
         # call this function to restart the game.
         self.physics_engine = arcade.PhysicsEnginePlatformer(self.player_sprite, self.wall_list, GRAVITY)
