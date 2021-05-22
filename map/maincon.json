@@ -1,0 +1,12 @@
+{
+    "map_con": [
+    	"map.json",
+    	"map2.json"
+    ],
+    "cur_dir": [
+        "map/"
+    ],
+	"con_map": [
+		"map": [1, 0]
+	]
+}
