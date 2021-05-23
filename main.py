@@ -95,7 +95,7 @@ class MyGame(arcade.Window):
             # coin
             for c in range(len(data["coins"])):
                 self.coin_line(data["coins"][c]["pos"][0], data["coins"][c]["pos"][1], data["coins"][c]["pos"][2],
-                                 data["coins"][c]["tex"])
+                                 data["coins"][c]["tex"], data["coins"][c]["place_direction"][0])
 
             # flag
             for e in range(len(data["flags"])):
@@ -123,8 +123,6 @@ class MyGame(arcade.Window):
             self.player_restart()
         with open(connector, encoding='utf-8') as c_r:
             j_con = json.load(c_r)
-        with open('j_con["map_con"][cur_m]', encoding='utf-8') as m_r:
-            j_curm = json.load(m_r)
         if p_m == -1:
             self.map_read(j_con["cur_dir"][0] + j_con["map_con"][cur_m])
         self.cur_m = cur_m
@@ -145,13 +143,13 @@ class MyGame(arcade.Window):
             self.portal_list.append(portal)
 
     def wall_line(self, start, end, height, img, p_d):  # end 대신에 num 변수를 통해 range 를 start*num으로 하는 것이 어떨지 제안.
-        if p_d == 0:
+        if p_d == "0":
             for x in range(start, end, 32):
                 wall = arcade.Sprite(img, char_scaling)
                 wall.center_x = x
                 wall.center_y = height
                 self.wall_list.append(wall)
-        elif p_d == 1:
+        elif p_d == "1":
             for y in range(start, end, 32):
                 wall = arcade.Sprite(img, char_scaling)
                 wall.center_x = height
@@ -188,13 +186,13 @@ class MyGame(arcade.Window):
 
     # 임시 코인 나타내기
     def coin_line(self, start, end, height, img, p_d):
-        if p_d == 0:
+        if p_d == "0":
             for x in range(start, end, 32):
                 coin = arcade.Sprite(img, char_scaling)
                 coin.center_x = x
                 coin.center_y = height
                 self.coin_list.append(coin)
-        elif p_d == 1:
+        elif p_d == "1":
             for y in range(start, end, 32):
                 coin = arcade.Sprite(img, char_scaling)
                 coin.center_x = height
@@ -344,7 +342,7 @@ class MyGame(arcade.Window):
         for portal in portal_hit_list:
             self.player_sprite.remove_from_sprite_lists()
             self.cur_m = self.cur_m + 1
-            self.head_map(self.cur_m, "map/maincon.json")
+            self.head_map(self.cur_m, "map/maincon.json", -1)
 
         # flag 에 닿았을 경우 조건
         for flag in flag_hit_list:
@@ -367,7 +365,6 @@ class MyGame(arcade.Window):
         self.object_list.draw()
         self.player_list.draw()
         self.spring_list.draw()
-        self.mirror_list.draw()
         self.flag_list.draw()
         self.portal_list.draw()
 
