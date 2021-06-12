@@ -1,0 +1,22 @@
+{
+  "meta": [
+    "name",
+    "author"
+  ],
+  "char": [
+    64,
+    64
+  ],
+  "walls": [
+  ],
+  "thorns": [
+  ],
+  "coins": [
+  ],
+  "flags": [
+  ],
+  "spring": [
+  ],
+  "portal": [
+  ]
+}

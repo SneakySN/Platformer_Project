@@ -1,25 +1,6 @@
 import arcade
 import json
-import Menu
-
-screen_w = 1280
-screen_h = 720
-screen_t = "Platformer"
-
-MOVEMENT_SPEED = 8
-
-GRAVITY = 1
-player_jump_speed = 18
-
-# How many pixels to keep as a minimum margin between the character
-# and the edge of the screen.
-LEFT_VIEWPORT_MARGIN = 100
-RIGHT_VIEWPORT_MARGIN = 100
-BOTTOM_VIEWPORT_MARGIN = 50
-TOP_VIEWPORT_MARGIN = 100
-
-# Scaling
-char_scaling = 0.25
+from GlobalConsts import *
 
 class GameView(arcade.View):
     # Main application class.
@@ -61,6 +42,7 @@ class GameView(arcade.View):
         self.char_y = None
         self.save_char_x = None  # 플레이어 위치저장 변수
         self.save_char_y = None  # 플레이어 위치저장 변수
+        self.map_string_list = {"walls", "thorns", "coins", "flags", "spring", "portal"}
 
         self.cur_m = 0
         self.window.set_mouse_visible(True)
@@ -78,41 +60,22 @@ class GameView(arcade.View):
 
             # setting user position
             self.user_pos(location_x, location_y)
-            self.player_sprite.center_x = self.char_x
-            self.player_sprite.center_y = self.char_y
 
-            # wall
-            for a in range(len(data["walls"])):
-                self.wall_line(data["walls"][a]["pos"][0], data["walls"][a]["pos"][1], data["walls"][a]["pos"][2],
-                               data["walls"][a]["tex"], data["walls"][a]["place_direction"][0])
-
-            # thorn
-            for b in range(len(data["thorns"])):
-                self.object_line(data["thorns"][b]["pos"][0], data["thorns"][b]["pos"][1], data["thorns"][b]["pos"][2],
-                                 data["thorns"][b]["tex"])
-
-            # coin
-            for c in range(len(data["coins"])):
-                self.coin_line(data["coins"][c]["pos"][0], data["coins"][c]["pos"][1], data["coins"][c]["pos"][2],
-                               data["coins"][c]["tex"], data["coins"][c]["place_direction"][0])
-
-            # flag
-            for e in range(len(data["flags"])):
-                self.flag_line(data["flags"][e]["pos"][0], data["flags"][e]["pos"][1], data["flags"][e]["tex"])
-
-            # spring
-            for g in range(len(data["spring"])):
-                self.spring_line(data["spring"][g]["pos"][0], data["spring"][g]["pos"][1], data["spring"][g]["pos"][2],
-                                 data["spring"][g]["tex"])
-
-            # portal
-            for h in range(len(data["portal"])):
-                self.portal_line(data["portal"][h]["pos"][0], data["portal"][h]["pos"][1], data["portal"][h]["pos"][2],
-                                 data["portal"][h]["tex"])
+            # draw
+            for i in self.map_string_list:
+                for a in range(len(data[i])):
+                    for k in data[i]:
+                        if i == 0: self.wall_line(k["pos"][0], k["pos"][1], k["pos"][2], k["tex"], k["place_direction"][0])
+                        elif i == 1: self.object_line(k["pos"][0], k["pos"][1], k["pos"][2], k["tex"])
+                        elif i == 2: self.coin_line(k["pos"][0], k["pos"][1], k["pos"][2], k["tex"], k["place_direction"][0])
+                        elif i == 3: self.flag_line(k["pos"][0], k["pos"][1], k["pos"][2])
+                        elif i == 4: self.spring_line(k["pos"][0], k["pos"][1], k["pos"][2], k["tex"])
+                        elif i == 5: self.portal_line(k["pos"][0], k["pos"][1], k["pos"][2], k["tex"])
 
     def user_pos(self, u_x, u_y):
         self.char_x = u_x
         self.char_y = u_y
+        print("user_pos runs")
 
     def head_map(self, cur_m, connector, p_m):
         if cur_m == 0:
@@ -142,18 +105,11 @@ class GameView(arcade.View):
             self.portal_list.append(portal)
 
     def wall_line(self, start, end, height, img, p_d):
-        if p_d == "0":
-            for x in range(start, end, 32):
-                wall = arcade.Sprite(img, char_scaling)
-                wall.center_x = x
-                wall.center_y = height
-                self.wall_list.append(wall)
-        elif p_d == "1":
-            for y in range(start, end, 32):
-                wall = arcade.Sprite(img, char_scaling)
-                wall.center_x = height
-                wall.center_y = y
-                self.wall_list.append(wall)
+        for u in range(start, end, 32):
+            wall = arcade.Sprite(img, char_scaling)
+            wall.center_x = u if p_d == "0" else height
+            wall.center_y = height if p_d == "0" else u
+            self.wall_list.append(wall)
 
     def spring_line(self, start, end, height, img):
         for x in range(start, end, 32):
@@ -185,18 +141,11 @@ class GameView(arcade.View):
 
     # 임시 코인 나타내기
     def coin_line(self, start, end, height, img, p_d):
-        if p_d == "0":
-            for x in range(start, end, 32):
-                coin = arcade.Sprite(img, char_scaling)
-                coin.center_x = x
-                coin.center_y = height
-                self.coin_list.append(coin)
-        elif p_d == "1":
-            for y in range(start, end, 32):
-                coin = arcade.Sprite(img, char_scaling)
-                coin.center_x = height
-                coin.center_y = y
-                self.coin_list.append(coin)
+        for u in range(start, end, 32):
+            coin = arcade.Sprite(img, char_scaling)
+            coin.center_x = u if p_d == "0" else height
+            coin.center_y = height if p_d == "0" else u
+            self.coin_list.append(coin)
 
     # player 스프라이트 처음위치에서 재시작, 코인도 재생성 - 현재 코인 재생성 안됨.
     def player_restart(self):
@@ -233,6 +182,10 @@ class GameView(arcade.View):
         self.player_sprite.center_x = self.char_x  # 플레이어 시작 위치인 char_x 를 넣어줌
         self.player_sprite.center_y = self.char_y
         self.player_list.append(self.player_sprite)
+        print("this code works")
+        print(self.char_x)
+        print()
+        print(self.player_list)
 
         # call this function to restart the game.
         self.physics_engine = arcade.PhysicsEnginePlatformer(self.player_sprite, self.wall_list, GRAVITY)

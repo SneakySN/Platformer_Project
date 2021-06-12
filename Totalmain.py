@@ -1,27 +1,6 @@
 import arcade
 import json
-
-# Constants
-
-screen_w = 1280
-screen_h = 720
-screen_t = "Platformer"
-
-MOVEMENT_SPEED = 8
-
-GRAVITY = 1
-player_jump_speed = 18
-
-# How many pixels to keep as a minimum margin between the character
-# and the edge of the screen.
-LEFT_VIEWPORT_MARGIN = 100
-RIGHT_VIEWPORT_MARGIN = 100
-BOTTOM_VIEWPORT_MARGIN = 50
-TOP_VIEWPORT_MARGIN = 100
-
-# Scaling
-char_scaling = 0.25
-
+from GlobalConsts import *
 
 class MainView(arcade.View):
 
@@ -39,7 +18,7 @@ class MainView(arcade.View):
 
     def setup(self):
         self.menu_list = arcade.SpriteList(use_spatial_hash=True)
-        self.mouse_sprite = arcade.Sprite("pic/default/char.png", char_scaling)
+        self.mouse_sprite = arcade.Sprite("pic/default/cursor.png", char_scaling)
         self.menu_line(screen_w / 2, screen_h / 2 + 32 * 5, "pic/menu/start.png")  # start
         self.menu_line(screen_w / 2, screen_h / 2 + 32 * 2, "pic/menu/setting.png")  # setting
         self.menu_line(screen_w / 2, screen_h / 2 - 32 * 1, "pic/menu/mapedit.png")  # map_edit
