@@ -11,7 +11,7 @@ class SettingView(arcade.View):
 
         self.mouse_list = None
         self.mouse_sprite = None
-        self.window.set_mouse_visible(False)
+        self.window.set_mouse_visible(True)
 
     def setup(self):
         self.menu_list = arcade.SpriteList(use_spatial_hash=True)

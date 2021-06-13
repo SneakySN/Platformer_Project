@@ -14,8 +14,6 @@ class MainView(arcade.View):
         self.mouse_list = None
         self.mouse_sprite = None
         self.remember_menu = 0
-
-        # 창에 마우스 보이게/안보이게 하는 기능
         self.window.set_mouse_visible(False)
 
     def setup(self):

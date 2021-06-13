@@ -1,5 +1,7 @@
 import arcade
 import json
+from functools import singledispatchmethod as mdp
+from types import *
 from GlobalConsts import *
 
 class GameView(arcade.View):
@@ -47,6 +49,7 @@ class GameView(arcade.View):
         self.cur_m = 0
         self.window.set_mouse_visible(True)
 
+    @mdp
     def map_read(self, map_file):
         with open(map_file, encoding='utf-8') as f_r:
             # load file
@@ -63,14 +66,72 @@ class GameView(arcade.View):
 
             # draw
             for i in self.map_string_list:
-                for a in range(len(data[i])):
-                    for k in data[i]:
-                        if i == 0: self.wall_line(k["pos"][0], k["pos"][1], k["pos"][2], k["tex"], k["place_direction"][0])
-                        elif i == 1: self.object_line(k["pos"][0], k["pos"][1], k["pos"][2], k["tex"])
-                        elif i == 2: self.coin_line(k["pos"][0], k["pos"][1], k["pos"][2], k["tex"], k["place_direction"][0])
-                        elif i == 3: self.flag_line(k["pos"][0], k["pos"][1], k["pos"][2])
-                        elif i == 4: self.spring_line(k["pos"][0], k["pos"][1], k["pos"][2], k["tex"])
-                        elif i == 5: self.portal_line(k["pos"][0], k["pos"][1], k["pos"][2], k["tex"])
+                print(i)
+                #for a in range(len(data[i])):
+                for k in data[i]:
+                    if i == "walls": self.wall_line(k["pos"][0], k["pos"][1], k["pos"][2], k["tex"])
+                    elif i == "thorns": self.object_line(k["pos"][0], k["pos"][1], k["pos"][2], k["tex"])
+                    elif i == "coins": self.coin_line(k["pos"][0], k["pos"][1], k["pos"][2], k["tex"])
+                    elif i == "flags": self.flag_line(k["pos"][0], k["pos"][1], k["tex"])
+                    elif i == "spring": self.spring_line(k["pos"][0], k["pos"][1], k["pos"][2], k["tex"])
+                    elif i == "portal": self.portal_line(k["pos"][0], k["pos"][1], k["pos"][2], k["tex"])
+
+    @map_read.register(dict)
+    def _(self, map_file):
+        data = map_file
+
+        # load variables
+        # location
+        location_x = data["char"][0]
+        location_y = data["char"][1]
+
+        self.user_pos(location_x, location_y)
+
+        # draw
+        for i in self.map_string_list:
+            print(i)
+            # for a in range(len(data[i])):
+            for k in data[i]:
+                if i == "walls":
+                    self.wall_line(k["pos"][0], k["pos"][1], k["pos"][2], k["tex"])
+                elif i == "thorns":
+                    self.object_line(k["pos"][0], k["pos"][1], k["pos"][2], k["tex"])
+                elif i == "coins":
+                    self.coin_line(k["pos"][0], k["pos"][1], k["pos"][2], k["tex"])
+                elif i == "flags":
+                    self.flag_line(k["pos"][0], k["pos"][1], k["tex"])
+                elif i == "spring":
+                    self.spring_line(k["pos"][0], k["pos"][1], k["pos"][2], k["tex"])
+                elif i == "portal":
+                    self.portal_line(k["pos"][0], k["pos"][1], k["pos"][2], k["tex"])
+
+    @map_read.register(str)
+    def _(self, map_file):
+        with open(map_file, encoding='utf-8') as f_r:
+            # load file
+            data = json.load(f_r)
+            print(data)
+
+            # load variables
+            # location
+            location_x = data["char"][0]
+            location_y = data["char"][1]
+
+            # setting user position
+            self.user_pos(location_x, location_y)
+
+            # draw
+            for i in self.map_string_list:
+                print(i)
+                #for a in range(len(data[i])):
+                for k in data[i]:
+                    if i == "walls": self.wall_line(k["pos"][0], k["pos"][1], k["pos"][2], k["tex"])
+                    elif i == "thorns": self.object_line(k["pos"][0], k["pos"][1], k["pos"][2], k["tex"])
+                    elif i == "coins": self.coin_line(k["pos"][0], k["pos"][1], k["pos"][2], k["tex"])
+                    elif i == "flags": self.flag_line(k["pos"][0], k["pos"][1], k["tex"])
+                    elif i == "spring": self.spring_line(k["pos"][0], k["pos"][1], k["pos"][2], k["tex"])
+                    elif i == "portal": self.portal_line(k["pos"][0], k["pos"][1], k["pos"][2], k["tex"])
+
 
     def user_pos(self, u_x, u_y):
         self.char_x = u_x
@@ -104,11 +165,11 @@ class GameView(arcade.View):
             portal.center_y = height
             self.portal_list.append(portal)
 
-    def wall_line(self, start, end, height, img, p_d):
+    def wall_line(self, start, end, height, img):
         for u in range(start, end, 32):
             wall = arcade.Sprite(img, char_scaling)
-            wall.center_x = u if p_d == "0" else height
-            wall.center_y = height if p_d == "0" else u
+            wall.center_x = u
+            wall.center_y = height
             self.wall_list.append(wall)
 
     def spring_line(self, start, end, height, img):
@@ -140,11 +201,11 @@ class GameView(arcade.View):
             self.object_list.append(object_f)
 
     # 임시 코인 나타내기
-    def coin_line(self, start, end, height, img, p_d):
+    def coin_line(self, start, end, height, img):
         for u in range(start, end, 32):
             coin = arcade.Sprite(img, char_scaling)
-            coin.center_x = u if p_d == "0" else height
-            coin.center_y = height if p_d == "0" else u
+            coin.center_x = u
+            coin.center_y = height
             self.coin_list.append(coin)
 
     # player 스프라이트 처음위치에서 재시작, 코인도 재생성 - 현재 코인 재생성 안됨.
