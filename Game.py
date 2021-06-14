@@ -147,7 +147,7 @@ class GameView(arcade.View):
         with open(connector, encoding='utf-8') as c_r:
             j_con = json.load(c_r)
         if p_m == -1:
-            self.map_read(j_con["cur_dir"][0] + j_con["map_con"][cur_m])
+            self.map_read(j_con["cur_dir"][0] + j_con["map_con"][cur_m]) #j_con["cur_dir"][0] +
         self.cur_m = cur_m
 
     def flag_save(self, flag, num):
@@ -237,7 +237,7 @@ class GameView(arcade.View):
     def setup(self):
         # sprite lists
         self.initialize(1)
-        self.head_map(0, "map/maincon.json", -1)
+        self.head_map(0, "map/test/maincon.json", -1)
 
         # player_sprite attributes
         self.player_sprite.center_x = self.char_x  # 플레이어 시작 위치인 char_x 를 넣어줌
@@ -355,7 +355,7 @@ class GameView(arcade.View):
         for portal in portal_hit_list:
             self.player_sprite.remove_from_sprite_lists()
             self.cur_m = self.cur_m + 1
-            self.head_map(self.cur_m, "map/maincon.json", -1)
+            self.head_map(self.cur_m, "map/test/maincon.json", -1)
 
         # flag 에 닿았을 경우 조건
         for flag in flag_hit_list:

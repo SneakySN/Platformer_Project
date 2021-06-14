@@ -1,0 +1,32 @@
+{
+    "meta": [
+        "platform_basic_test",
+        "JUMPER"
+    ],
+    "char": [
+        64,
+        96
+    ],
+    "walls": [
+        {"pos": [16, 2560, 32], "tex": "pic/platforms/def_floor.png"},
+        {"pos": [160, 384, 128], "tex": "pic/platforms/def_floor.png"},
+        {"pos": [128, 384, 512], "tex": "pic/platforms/def_floor.png"},
+        {"pos": [512, 768, 384], "tex": "pic/platforms/def_floor.png"}
+    ],
+    "thorns": [
+    ],
+	"coins": [
+		{"pos": [512, 544, 160], "tex": "pic/object_interact/bit_w.png"},
+		{"pos": [256, 288, 160], "tex": "pic/object_interact/bit_w.png"}
+	],
+	"buttons": [
+	],
+	"flags": [
+	],
+	"mirror": [
+	],
+	"spring": [
+	],
+	"portal": [
+	]
+}

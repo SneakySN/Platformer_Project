@@ -1,0 +1,33 @@
+{
+    "meta": [
+        "platform_basic_test",
+        "JUMPER"
+    ],
+    "char": [
+        32,
+        64
+    ],
+    "walls": [
+        {"pos": [16, 2560, 32], "tex": "pic/platforms/def_floor.png"},
+        {"pos": [128, 384, 128], "tex": "pic/platforms/def_floor.png"},
+        {"pos": [128, 384, 512], "tex": "pic/platforms/def_floor.png"},
+        {"pos": [512, 768, 384], "tex": "pic/platforms/def_floor.png"}
+    ],
+	"thorns": [
+		{"pos": [128, 160, 160], "tex": "pic/object_interact/thorn_0.png"}
+	],
+	"coins": [
+		{"pos": [512, 544, 160], "tex": "pic/object_interact/bit_w.png"},
+		{"pos": [256, 288, 160], "tex": "pic/object_interact/bit_w.png"}
+	],
+	"flags": [
+		{"pos": [512, 180], "tex": "pic/object_interact/flag.png"},
+		{"pos": [160, 576], "tex": "pic/object_interact/flag.png"}
+	],
+	"spring": [
+		{"pos": [1024, 1056, 170], "tex": "pic/object_interact/spring.png"}
+	],
+	"portal": [
+		{"pos": [824, 860, 512], "tex": "pic/object_interact/portal.png"}
+	]
+}
