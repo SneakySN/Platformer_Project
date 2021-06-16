@@ -1,3 +1,4 @@
+#최영훈
 # Constants
 
 screen_w = 1280
