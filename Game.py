@@ -2,6 +2,8 @@ import arcade
 import json
 from functools import singledispatchmethod as mdp
 from types import *
+
+import Menu
 from GlobalConsts import *
 
 class GameView(arcade.View):
@@ -263,6 +265,9 @@ class GameView(arcade.View):
             self.left_pressed = True
         elif key == arcade.key.RIGHT:
             self.right_pressed = True
+        elif key == arcade.key.ESCAPE:
+            pause = PauseView(self)
+            self.window.show_view(pause)
 
     def on_key_release(self, key, modifiers):
         # called when the user releases a key
@@ -380,3 +385,29 @@ class GameView(arcade.View):
         self.spring_list.draw()
         self.flag_list.draw()
         self.portal_list.draw()
+
+class PauseView(arcade.View):       #pause
+    def __init__(self, game_veiw):
+        super().__init__()
+        self.gameveiw = game_veiw
+
+    def on_draw(self):
+        arcade.start_render()
+
+        player_sprite = self.gameveiw.player_sprite
+        player_sprite.draw()
+
+        arcade.draw_lrtb_rectangle_filled(left= player_sprite.left, right= player_sprite.right, top= player_sprite.top,
+                                          bottom= player_sprite.bottom, color=arcade.color.WHITE)
+
+        arcade.draw_text("PAUSED",screen_w / 2, screen_h / 2 + 50, arcade.color.WHITE, font_size= 50, anchor_x="center")
+        arcade.draw_text("Press Esc to return",screen_w / 2, screen_h / 2 - 30, arcade.color.WHITE, font_size= 20, anchor_x="center")
+        arcade.draw_text("Press M to Menu",screen_w / 2, screen_h / 2 - 50, arcade.color.WHITE, font_size= 20, anchor_x="center")
+
+    def on_key_press(self, key, _modifiers):
+        if key == arcade.key.ESCAPE:
+            self.window.show_view(self.gameveiw)
+        elif key == arcade.key.M:
+            menu_view = Menu.MainView()
+            menu_view.setup()
+            self.window.show_view(menu_view)
