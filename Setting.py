@@ -29,7 +29,7 @@ class SettingView(arcade.View):
         self.mouse_sprite = arcade.Sprite("pic/default/cursor.png", char_scaling)
         self.mouse_list.append(self.mouse_sprite)
         self.menu_line(96, 32, "pic/menu/back.png")  # back
-        self.volb_line(screen_w / 2 - 64, screen_h / 2 + 112, "pic/menu/list_l.png", 0.5)
+        self.volb_line(screen_w / 2 - 64, screen_h / 2 + 112, "pic/menu/list_l.png", 0.5) #윤후성
         self.volb_line(screen_w / 2, screen_h / 2 + 112, "pic/menu/list_cell.png", 0.5)
         self.volb_line(screen_w / 2 + 64, screen_h / 2 + 112, "pic/menu/list_r.png", 0.5)
         self.volb_line(screen_w / 2 - 64, screen_h / 2 - 48, "pic/menu/list_l.png", 0.5)
@@ -68,7 +68,7 @@ class SettingView(arcade.View):
         self.volb_list.draw()
         self.mouse_list.draw()
 
-        arcade.draw_text("Setting", screen_w / 2, screen_h / 2 + 32 * 7, arcade.color.WHITE, font_size=30,
+        arcade.draw_text("Setting", screen_w / 2, screen_h / 2 + 32 * 7, arcade.color.WHITE, font_size=30, #윤후성
                          anchor_x="center")
         arcade.draw_text("Master Volume", screen_w / 2, screen_h / 2 + 32 * 5, arcade.color.WHITE, font_size=30,
                          anchor_x="center")
