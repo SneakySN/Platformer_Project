@@ -1,3 +1,4 @@
+#김태인, 이정주, 최영훈
 import arcade
 
 import GlobalConsts
