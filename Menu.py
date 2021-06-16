@@ -1,9 +1,9 @@
-#김태인, 이정주, 최영훈
+#김태인, 이정주
 import arcade
 import Mapedit
 import Setting
 import Game
-from GlobalConsts import *
+from GlobalConsts import * #최영훈
 
 class MainView(arcade.View):
 
