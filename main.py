@@ -1,3 +1,4 @@
+#김태인, 최영훈
 import arcade
 import Menu
 from GlobalConsts import *
