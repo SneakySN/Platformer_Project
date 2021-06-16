@@ -9,7 +9,7 @@ from GlobalConsts import *
 
 class GameView(arcade.View):
     # Main application class.
-    def __init__(self):
+    def __init__(self): #최영훈, 이정주, 
         # call the parent class and set up the window
         super().__init__()
 
@@ -52,7 +52,7 @@ class GameView(arcade.View):
         self.cur_m = 0
         self.window.set_mouse_visible(True)
 
-    @mdp
+    @mdp #최영훈, 
     def map_read(self, map_file):
         with open(map_file, encoding='utf-8') as f_r:
             # load file
@@ -79,7 +79,7 @@ class GameView(arcade.View):
                     elif i == "spring": self.spring_line(k["pos"][0], k["pos"][1], k["pos"][2], k["tex"])
                     elif i == "portal": self.portal_line(k["pos"][0], k["pos"][1], k["pos"][2], k["tex"])
 
-    @map_read.register(dict)
+    @map_read.register(dict) #최영훈
     def _(self, map_file):
         data = map_file
 
@@ -108,7 +108,7 @@ class GameView(arcade.View):
                 elif i == "portal":
                     self.portal_line(k["pos"][0], k["pos"][1], k["pos"][2], k["tex"])
 
-    @map_read.register(str)
+    @map_read.register(str) #최영훈
     def _(self, map_file):
         with open(map_file, encoding='utf-8') as f_r:
             # load file
@@ -136,12 +136,12 @@ class GameView(arcade.View):
                     elif i == "portal": self.portal_line(k["pos"][0], k["pos"][1], k["pos"][2], k["tex"])
 
 
-    def user_pos(self, u_x, u_y):
+    def user_pos(self, u_x, u_y): #최영훈
         self.char_x = u_x
         self.char_y = u_y
         print("user_pos runs")
 
-    def head_map(self, cur_m, connector, p_m):
+    def head_map(self, cur_m, connector, p_m): #최영훈, 이정주
         if cur_m == 0:
             self.initialize(1)
         elif cur_m > 0:
@@ -153,7 +153,7 @@ class GameView(arcade.View):
             self.map_read(j_con["cur_dir"][0] + j_con["map_con"][cur_m]) #j_con["cur_dir"][0] +
         self.cur_m = cur_m
 
-    def flag_save(self, flag, num): #
+    def flag_save(self, flag, num): #이정주
         if num == 1:
             self.save_char_x = flag.center_x
             self.save_char_y = flag.center_y
@@ -196,7 +196,7 @@ class GameView(arcade.View):
         self.flag_list.append(flag)
 
     # 임시 장애물 나타내기 - 가시, 레이저, 레이저 박스
-    def object_line(self, start, end, height, img): #이정주, 김태인
+    def object_line(self, start, end, height, img): #김태인
         for x in range(start, end, 32):
             object_f = arcade.Sprite(img, char_scaling)
             object_f.center_x = x
