@@ -7,7 +7,7 @@ from GlobalConsts import *
 
 class MainView(arcade.View):
 
-    def __init__(self):
+    def __init__(self): #김태인, 이정주
         super().__init__()
         self.menu_list = None
         self.menu_list = None
@@ -17,7 +17,7 @@ class MainView(arcade.View):
         self.remember_menu = 0
         self.window.set_mouse_visible(False)
 
-    def setup(self):
+    def setup(self): #김태인, 이정주
         self.menu_list = arcade.SpriteList(use_spatial_hash=True)
         self.mouse_sprite = arcade.Sprite("pic/default/cursor.png", char_scaling)
         self.menu_line(screen_w / 2, screen_h / 2 + 32 * 5, "pic/menu/start.png")  # start
@@ -28,18 +28,18 @@ class MainView(arcade.View):
         self.mouse_list = arcade.SpriteList()
         self.mouse_list.append(self.mouse_sprite)
 
-    def menu_line(self, center_x, center_y, img):
+    def menu_line(self, center_x, center_y, img): #김태인, 이정주
         menu = arcade.Sprite(img)
         menu.center_x = center_x
         menu.center_y = center_y
         self.menu_list.append(menu)
 
 
-    def on_show(self):
+    def on_show(self): #김태인, 이정주
         arcade.set_background_color(arcade.csscolor.BLACK)
         arcade.set_viewport(0, screen_w - 1, 0, screen_h - 1)
 
-    def on_draw(self):
+    def on_draw(self): #김태인, 이정주
         arcade.start_render()
         self.menu_list.draw()
         self.mouse_list.draw()
@@ -48,11 +48,11 @@ class MainView(arcade.View):
                          anchor_x="center")
 
     # 마우스로 화면 클릭시 게임화면으로 전환
-    def on_mouse_motion(self, x, y, dx, dy):
+    def on_mouse_motion(self, x, y, dx, dy): #이정주
         self.mouse_sprite.center_x = x
         self.mouse_sprite.center_y = y
 
-    def on_mouse_press(self, _x, _y, button, _modifiers):
+    def on_mouse_press(self, _x, _y, button, _modifiers): #이정주
 
         menu_hit_list = arcade.check_for_collision_with_list(self.mouse_sprite, self.menu_list)
 
