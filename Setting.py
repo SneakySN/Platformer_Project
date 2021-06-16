@@ -1,9 +1,9 @@
-#김태인, 이정주, 최영훈
+#김태인, 이정주
 import arcade
 
-import GlobalConsts
+import GlobalConsts #
 import Menu
-from GlobalConsts import *
+from GlobalConsts import * #최영훈
 
 class SettingView(arcade.View):
 
@@ -100,7 +100,7 @@ class SettingView(arcade.View):
                 elif volb_index == self.volb_list[3]:
                     self.volume_up(self.music_vol)
 
-        for menu_index in menu_hit_list:
+        for menu_index in menu_hit_list: 
             if button == arcade.MOUSE_BUTTON_LEFT:
                 if menu_index == self.menu_list[0]:
                     main_view = Menu.MainView()
