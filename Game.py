@@ -153,7 +153,7 @@ class GameView(arcade.View):
             self.map_read(j_con["cur_dir"][0] + j_con["map_con"][cur_m]) #j_con["cur_dir"][0] +
         self.cur_m = cur_m
 
-    def flag_save(self, flag, num):
+    def flag_save(self, flag, num): #
         if num == 1:
             self.save_char_x = flag.center_x
             self.save_char_y = flag.center_y
@@ -161,21 +161,21 @@ class GameView(arcade.View):
             self.save_char_x = self.char_x
             self.save_char_y = self.char_y
 
-    def portal_line(self, start, end, height, img):
+    def portal_line(self, start, end, height, img): #이정주
         for x in range(start, end, 32):
             portal = arcade.Sprite(img, char_scaling)
             portal.center_x = x
             portal.center_y = height
             self.portal_list.append(portal)
 
-    def wall_line(self, start, end, height, img):
+    def wall_line(self, start, end, height, img): #최영훈
         for u in range(start, end, 32):
             wall = arcade.Sprite(img, char_scaling)
             wall.center_x = u
             wall.center_y = height
             self.wall_list.append(wall)
 
-    def spring_line(self, start, end, height, img):
+    def spring_line(self, start, end, height, img): #이정주, 김태인
         for x in range(start, end, 32):
             spring = arcade.Sprite(img, char_scaling)
             spring.center_x = x
@@ -183,12 +183,12 @@ class GameView(arcade.View):
             self.spring_list.append(spring)
 
     # 스프링에 닿았을 경우 캐릭터가 점프를 2배높이
-    def spring_act(self):
+    def spring_act(self): #김태인
         if self.physics_engine.can_jump():
             self.player_sprite.change_y = player_jump_speed * 2
             self.physics_engine.increment_jump_counter()
 
-    def flag_line(self, x, y, img):
+    def flag_line(self, x, y, img): #이정주
         flag = arcade.Sprite(img, char_scaling)
         flag.center_x = x
         flag.center_y = y
@@ -196,7 +196,7 @@ class GameView(arcade.View):
         self.flag_list.append(flag)
 
     # 임시 장애물 나타내기 - 가시, 레이저, 레이저 박스
-    def object_line(self, start, end, height, img):
+    def object_line(self, start, end, height, img): #이정주, 김태인
         for x in range(start, end, 32):
             object_f = arcade.Sprite(img, char_scaling)
             object_f.center_x = x
@@ -204,7 +204,7 @@ class GameView(arcade.View):
             self.object_list.append(object_f)
 
     # 임시 코인 나타내기
-    def coin_line(self, start, end, height, img):
+    def coin_line(self, start, end, height, img): #이정주, 김태인
         for u in range(start, end, 32):
             coin = arcade.Sprite(img, char_scaling)
             coin.center_x = u
@@ -212,14 +212,14 @@ class GameView(arcade.View):
             self.coin_list.append(coin)
 
     # player 스프라이트 처음위치에서 재시작, 코인도 재생성 - 현재 코인 재생성 안됨.
-    def player_restart(self):
+    def player_restart(self): #최영훈, 이정주, 김태인
         # 전체 스프라이트 제거 후 map read 필요.
         self.player_list = arcade.SpriteList()
         self.player_sprite.center_x = self.save_char_x
         self.player_sprite.center_y = self.save_char_y
         self.player_list.append(self.player_sprite)
 
-    def initialize(self, case_c):
+    def initialize(self, case_c): #최영훈, 이정주, 김태인
         if case_c == 0:
             self.coin_list = None
             self.restart_coin_list = None
@@ -237,14 +237,14 @@ class GameView(arcade.View):
         self.spring_list = arcade.SpriteList(use_spatial_hash=True)
         self.portal_list = arcade.SpriteList(use_spatial_hash=True)
 
-    def setup(self):
+    def setup(self): #최영훈
         # sprite lists
         self.initialize(1)
         self.head_map(0, "map/test/maincon.json", -1)
 
         # player_sprite attributes
-        self.player_sprite.center_x = self.char_x  # 플레이어 시작 위치인 char_x 를 넣어줌
-        self.player_sprite.center_y = self.char_y
+        self.player_sprite.center_x = self.char_x  # 플레이어 시작 위치인 char_x 를 넣어줌 #이정주
+        self.player_sprite.center_y = self.char_y #이정주
         self.player_list.append(self.player_sprite)
         print("this code works")
         print(self.char_x)
@@ -256,7 +256,7 @@ class GameView(arcade.View):
         self.spring_engine = arcade.PhysicsEnginePlatformer(self.player_sprite, self.spring_list, GRAVITY)
         self.physics_engine.enable_multi_jump(2)
 
-    def on_key_press(self, key, modifiers):
+    def on_key_press(self, key, modifiers): #최영훈
         # called whenever a key is pressed
         if key == arcade.key.UP or key == arcade.key.W:
             if self.physics_engine.can_jump():
@@ -270,14 +270,14 @@ class GameView(arcade.View):
             pause = PauseView(self)
             self.window.show_view(pause)
 
-    def on_key_release(self, key, modifiers):
+    def on_key_release(self, key, modifiers): #최영훈
         # called when the user releases a key
         if key == arcade.key.LEFT:
             self.left_pressed = False
         elif key == arcade.key.RIGHT:
             self.right_pressed = False
 
-    def on_update(self, delta_time):
+    def on_update(self, delta_time): #최영훈, 이정주, 김태인
         # movement & game logic
 
         # Calculate speed based on the keys pressed
@@ -375,7 +375,7 @@ class GameView(arcade.View):
             self.player_sprite.remove_from_sprite_lists()
             self.player_restart()
 
-    def on_draw(self):
+    def on_draw(self): #최영훈, 이정주, 김태인
         # render the screen.
         arcade.start_render()
         # code to draw the screen goes here
@@ -387,7 +387,7 @@ class GameView(arcade.View):
         self.flag_list.draw()
         self.portal_list.draw()
 
-class PauseView(arcade.View):       #pause
+class PauseView(arcade.View):       #pause, 윤후성
     def __init__(self, game_veiw):
         super().__init__()
         self.gameveiw = game_veiw
