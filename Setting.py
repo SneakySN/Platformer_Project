@@ -87,9 +87,9 @@ class SettingView(arcade.View):
     def on_mouse_press(self, _x, _y, button, _modifiers):
 
         menu_hit_list = arcade.check_for_collision_with_list(self.mouse_sprite, self.menu_list)
-        volb_hit_list = arcade.check_for_collision_with_list(self.mouse_sprite, self.volb_list)
+        volb_hit_list = arcade.check_for_collision_with_list(self.mouse_sprite, self.volb_list) #윤후성
 
-        for volb_index in volb_hit_list:
+        for volb_index in volb_hit_list: #윤후성
             if button == arcade.MOUSE_BUTTON_LEFT:
                 if volb_index == self.volb_list[0]:
                     self.volume_down(self.master_vol)
@@ -100,7 +100,7 @@ class SettingView(arcade.View):
                 elif volb_index == self.volb_list[3]:
                     self.volume_up(self.music_vol)
 
-        for menu_index in menu_hit_list: 
+        for menu_index in menu_hit_list: #윤후성
             if button == arcade.MOUSE_BUTTON_LEFT:
                 if menu_index == self.menu_list[0]:
                     main_view = Menu.MainView()
